@@ -14,6 +14,9 @@ const injectedRtkApi = api.injectEndpoints({
         body: queryArg.usernameCheckReq,
       }),
     }),
+    temporaryTest: build.query<TemporaryTestApiResponse, TemporaryTestApiArg>({
+      query: () => ({ url: `/game/temp` }),
+    }),
   }),
   overrideExisting: false,
 })
@@ -27,6 +30,8 @@ export type CheckUsernameAvailabilityApiResponse =
 export type CheckUsernameAvailabilityApiArg = {
   usernameCheckReq: UsernameCheckReq
 }
+export type TemporaryTestApiResponse = /** status 200 Successful Response */ any
+export type TemporaryTestApiArg = void
 export type CreatePlayerRes = {
   message: string
 }
@@ -40,4 +45,9 @@ export type UsernameCheckRes = {
 export type UsernameCheckReq = {
   username: string
 }
-export const { useStartGameMutation, useCheckUsernameAvailabilityMutation } = injectedRtkApi
+export const {
+  useStartGameMutation,
+  useCheckUsernameAvailabilityMutation,
+  useTemporaryTestQuery,
+  useLazyTemporaryTestQuery,
+} = injectedRtkApi

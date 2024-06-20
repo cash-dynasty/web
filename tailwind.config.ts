@@ -1,10 +1,7 @@
-import type { Config } from 'tailwindcss';
+import type { Config } from 'tailwindcss'
 
 const config: Config = {
-  content: [
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+  content: ['./src/components/**/*.{js,ts,jsx,tsx,mdx}', './src/app/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
       backgroundImage: {
@@ -13,6 +10,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
-};
-export default config;
+  plugins: [require('@tailwindcss/forms')],
+}
+export default config
