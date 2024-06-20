@@ -2,11 +2,7 @@ import { api } from './api'
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     loginForAccessToken: build.mutation<LoginForAccessTokenApiResponse, LoginForAccessTokenApiArg>({
-      query: (queryArg) => ({
-        url: `/auth/token`,
-        method: 'POST',
-        body: queryArg.bodyLoginForAccessTokenAuthTokenPost,
-      }),
+      query: (queryArg) => ({ url: `/auth/token`, method: 'POST', body: queryArg }),
     }),
     loginForRefreshToken: build.mutation<
       LoginForRefreshTokenApiResponse,
@@ -22,9 +18,7 @@ const injectedRtkApi = api.injectEndpoints({
 })
 export { injectedRtkApi as enhancedApi }
 export type LoginForAccessTokenApiResponse = /** status 200 Successful Response */ Token
-export type LoginForAccessTokenApiArg = {
-  bodyLoginForAccessTokenAuthTokenPost: BodyLoginForAccessTokenAuthTokenPost
-}
+export type LoginForAccessTokenApiArg = LoginReq
 export type LoginForRefreshTokenApiResponse = /** status 200 Successful Response */ Token
 export type LoginForRefreshTokenApiArg = void
 export type LogoutApiResponse = /** status 200 Successful Response */ MessageRes
@@ -36,13 +30,9 @@ export type Token = {
 export type MessageRes = {
   detail: string
 }
-export type BodyLoginForAccessTokenAuthTokenPost = {
-  grant_type?: string | null
+export type LoginReq = {
   username: string
   password: string
-  scope?: string
-  client_id?: string | null
-  client_secret?: string | null
 }
 export const {
   useLoginForAccessTokenMutation,
