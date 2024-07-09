@@ -2,27 +2,19 @@ import { api } from './api'
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     createUser: build.mutation<CreateUserApiResponse, CreateUserApiArg>({
-      query: (queryArg) => ({ url: `/users/create`, method: 'POST', body: queryArg.userCreateReq }),
+      query: (queryArg) => ({ url: `/users/create`, method: 'POST', body: queryArg }),
     }),
     activateUser: build.mutation<ActivateUserApiResponse, ActivateUserApiArg>({
-      query: (queryArg) => ({
-        url: `/users/activate`,
-        method: 'PATCH',
-        body: queryArg.userActivationReq,
-      }),
+      query: (queryArg) => ({ url: `/users/activate`, method: 'PATCH', body: queryArg }),
     }),
   }),
   overrideExisting: false,
 })
 export { injectedRtkApi as enhancedApi }
 export type CreateUserApiResponse = /** status 201 Successful Response */ UserCreateRes
-export type CreateUserApiArg = {
-  userCreateReq: UserCreateReq
-}
+export type CreateUserApiArg = UserCreateReq
 export type ActivateUserApiResponse = /** status 200 Successful Response */ UserActivationRes
-export type ActivateUserApiArg = {
-  userActivationReq: UserActivationReq
-}
+export type ActivateUserApiArg = UserActivationReq
 export type UserCreateRes = {
   id: number
   email: string

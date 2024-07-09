@@ -1,32 +1,42 @@
 'use client'
 import { useCreateUserMutation } from '@/redux/api/userApi'
 import { useState } from 'react'
-import { useTemporaryTestQuery } from '@/redux/api/gameApi'
+import { useStartGameMutation } from '@/redux/api/gameApi'
 import { useLoginForAccessTokenMutation, useLogoutMutation } from '@/redux/api/authApi'
-import Cookies from 'js-cookie'
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
+  const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [onUserRegister] = useCreateUserMutation()
   const [onUserLogin] = useLoginForAccessTokenMutation()
   const [logout] = useLogoutMutation()
-  const { data, isError, isSuccess, error, refetch } = useTemporaryTestQuery()
-
-  console.log(data, isError, isSuccess, error)
+  const [startGame] = useStartGameMutation()
 
   const handleRegisterUser = () => {
-    onUserRegister({ userCreateReq: { email, password } })
+    onUserRegister({ email, password })
   }
 
   const handleLogin = async () => {
-    onUserLogin({ username: email, password }).unwrap().then((res) => {
-      localStorage.setItem('access_token', res.access_token)
-    })
+    const formData = new FormData()
+    formData.append('username', email)
+    formData.append('password', password)
+    onUserLogin(formData as FormData & { username: string; password: string })
+      .unwrap()
+      .then((res) => {
+        router.push('/admin/buildings')
+      })
   }
 
   const handleLogout = () => {
-    logout().unwrap().then(() => localStorage.removeItem('access_token'))
+    logout()
+      .unwrap()
+      .then(() => localStorage.removeItem('access_token'))
+  }
+
+  const handleStartGame = () => {
+    startGame({ username: 'test1', starting_sector: 'IT' })
   }
 
   return (
@@ -105,11 +115,19 @@ export default function Home() {
                 Sign in
               </button>
             </div>
+            <div>
+              <button
+                type="button"
+                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={handleLogin}
+              >
+                Login
+              </button>
+            </div>
           </form>
 
-          <button onClick={handleLogin}>Login</button>
-          <button onClick={refetch}>test</button>
           <button onClick={handleLogout}>logout</button>
+          <button onClick={handleStartGame}>Start game</button>
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Not a member?{' '}

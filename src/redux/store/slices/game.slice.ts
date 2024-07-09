@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { RootState } from '@/redux/store/store.ts'
+import { RootState } from '@/redux/store/store'
 
 export type TGameState = {}
 
