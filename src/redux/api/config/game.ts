@@ -8,6 +8,7 @@ const config: ConfigFile = {
   outputFile: '../gameApi.ts',
   hooks: { queries: true, lazyQueries: true, mutations: true },
   filterEndpoints: tag(/game/i),
+  flattenArg: true,
 }
 
 export default config

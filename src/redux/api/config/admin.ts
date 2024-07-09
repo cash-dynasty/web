@@ -5,10 +5,11 @@ const config: ConfigFile = {
   schemaFile: 'http://localhost:8000/openapi.json',
   apiFile: '../api.ts',
   apiImport: 'api',
-  outputFile: '../userApi.ts',
+  outputFile: '../adminApi.ts',
   hooks: { queries: true, lazyQueries: true, mutations: true },
-  filterEndpoints: tag(/user/i),
+  filterEndpoints: tag(/admin/i),
   flattenArg: true,
+  useEnumType: true
 }
 
 export default config
