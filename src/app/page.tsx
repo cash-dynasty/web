@@ -22,13 +22,17 @@ export default function Home() {
     const formData = new FormData()
     formData.append('username', email)
     formData.append('password', password)
-    onUserLogin(formData as FormData & {username: string, password: string}).unwrap().then((res) => {
-      router.push('/admin/buildings')
-    })
+    onUserLogin(formData as FormData & { username: string; password: string })
+      .unwrap()
+      .then((res) => {
+        router.push('/admin/buildings')
+      })
   }
 
   const handleLogout = () => {
-    logout().unwrap().then(() => localStorage.removeItem('access_token'))
+    logout()
+      .unwrap()
+      .then(() => localStorage.removeItem('access_token'))
   }
 
   const handleStartGame = () => {

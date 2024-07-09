@@ -9,7 +9,7 @@ const config: ConfigFile = {
   hooks: { queries: true, lazyQueries: true, mutations: true },
   filterEndpoints: tag(/admin/i),
   flattenArg: true,
-  useEnumType: true
+  useEnumType: true,
 }
 
 export default config
